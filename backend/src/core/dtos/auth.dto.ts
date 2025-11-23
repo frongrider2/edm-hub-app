@@ -42,6 +42,8 @@ export class UserResponseDto {
 export interface IJWTpayload {
   email: string;
   role: UserRole;
+  name?: string;
+  googleId?: string;
   _id: string;
 }
 

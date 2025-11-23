@@ -1,15 +1,25 @@
-import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Res,
+  Query,
+  BadRequestException,
+} from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { UserRequest } from 'src/core/decorators/user.decolator';
+import { UserRequest } from 'src/core/auth/decorators/user.decolator';
 import {
   IJWTpayload,
   LoginDto,
   RegisterDto,
   UserResponseDto,
 } from 'src/core/dtos/auth.dto';
-import { AuthGuard } from 'src/core/guards/auth.guard';
-import { AuthService } from 'src/core/services/auth.service';
+import { AuthGuard } from 'src/core/auth/guards/auth.guard';
+import { AuthService } from 'src/core/auth/auth.service';
 import { UserService } from 'src/database/user/user.service';
+import { Response } from 'express';
 
 @Controller('/api/auth')
 export class AuthController {
@@ -46,6 +56,16 @@ export class AuthController {
     };
   }
 
+  @Get('google-callback')
+  async googleCallback(@Query('code') code: string, @Res() res: Response) {
+    if (!code) {
+      throw new BadRequestException('Code is required');
+    }
+    const { redirectUrl } = await this.authService.googleLogin(code);
+
+    return res.redirect(redirectUrl);
+  }
+
   @UseGuards(AuthGuard)
   @Get('profile')
   async profile(@UserRequest() user: IJWTpayload) {
@@ -56,5 +76,12 @@ export class AuthController {
     });
 
     return userRes;
+  }
+
+  @Get('google-login')
+  googleLogin(@Res() res: Response) {
+    console.log('ok');
+    const url = this.authService.getGoogleAuthUrl();
+    res.redirect(url);
   }
 }

@@ -8,7 +8,7 @@ import {
 import { ThrottlerException } from '@nestjs/throttler';
 import { Request, Response } from 'express';
 import { MongooseError } from 'mongoose';
-import { ValidationException } from 'src/core/exceptions/validation.exception';
+import { ValidationException } from 'src/core/common/exceptions/validation.exception';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

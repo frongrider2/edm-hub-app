@@ -10,10 +10,19 @@ export enum UserRole {
 
 @Schema()
 export class User {
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: false, default: null })
+  googleId: string;
+
+  @Prop({ type: String, required: false, default: '' })
+  name: string;
+
+  @Prop({ type: String, required: false, default: '' })
+  picture: string;
+
+  @Prop({ type: String, required: false, default: null })
   email: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: false, default: null })
   password: string;
 
   @Prop({ type: Boolean, required: true, default: false })

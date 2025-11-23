@@ -12,7 +12,7 @@ export class UserService {
     private readonly configService: ConfigService,
   ) {}
 
-  async createUser(dto: RegisterDto) {
+  async createRegisterUser(dto: RegisterDto) {
     const saltRounds = +(
       this.configService.get<number>('BCRYPT_SALT_ROUNDS') || '10'
     );
@@ -30,9 +30,31 @@ export class UserService {
     });
   }
 
+  async createGoogleUser(dto: {
+    email: string | null;
+    googleId: string;
+    name: string | null;
+    picture: string | null;
+  }) {
+    return this.userModel.create({
+      email: dto.email,
+      googleId: dto.googleId,
+      name: dto.name,
+      picture: dto.picture,
+    });
+  }
+
   async findByEmail(email: string): Promise<UserDocument | null> {
     try {
       return await this.userModel.findOne({ email }).exec();
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async findByGoogleId(googleId: string): Promise<UserDocument | null> {
+    try {
+      return await this.userModel.findOne({ googleId }).exec();
     } catch (error) {
       return null;
     }
@@ -44,6 +66,10 @@ export class UserService {
     } catch (error) {
       return null;
     }
+  }
+
+  async save(user: UserDocument): Promise<UserDocument> {
+    return await user.save();
   }
 
   getAll() {

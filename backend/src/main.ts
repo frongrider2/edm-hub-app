@@ -7,18 +7,18 @@ import {
   ValidationError,
   ValidationPipe,
 } from '@nestjs/common';
-import { ValidationException } from 'src/core/exceptions/validation.exception';
+import { ValidationException } from 'src/core/common/exceptions/validation.exception';
 import {
   PostStatusInterceptor,
   ResponseTransform,
-} from 'src/core/interceptors/response-transform.interceptor';
+} from 'src/core/common/interceptors/response-transform.interceptor';
 import {
   HttpExceptionFilter,
   MongooseExceptionFilter,
   NotFoundExceptionFilter,
   ThrottlerFilter,
   ValidationFilter,
-} from 'src/core/filters/http-exception.filter';
+} from 'src/core/common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

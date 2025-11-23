@@ -5,7 +5,7 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { AuthService } from 'src/core/services/auth.service';
+import { AuthService } from 'src/core/auth/auth.service';
 import { UserService } from 'src/database/user/user.service';
 import { Request } from 'express';
 

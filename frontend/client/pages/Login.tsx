@@ -32,8 +32,13 @@ const Login: React.FC = () => {
   };
 
   const handleGoogleSignIn = () => {
-    dispatch({ type: "SET_USER", payload: mockUser });
-    navigate("/songs");
+    // dispatch({ type: "SET_USER", payload: mockUser });
+    // navigate("/songs");
+
+    const redirectUrl = `${import.meta.env.VITE_API_URL}/auth/google-login`;
+    // console.log(redirectUrl);
+
+    window.location.href = redirectUrl;
   };
 
   const containerVariants = {

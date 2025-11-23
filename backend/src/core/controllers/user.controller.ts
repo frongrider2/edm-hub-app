@@ -23,7 +23,7 @@ export class UserController {
     if (user) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
-    return this.userService.createUser(createUserDto);
+    return this.userService.createRegisterUser(createUserDto);
   }
 
   @Get('')
