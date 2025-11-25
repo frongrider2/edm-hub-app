@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 interface IAxiosWrapper {
   get: (...configs: [string, any]) => Promise<any>;
   post: (...configs: [string, any]) => Promise<any>;
@@ -32,13 +32,13 @@ export default class AxiosWrapper implements IAxiosWrapper {
   async post(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
     try {
       const response = await this.axiosInstance.post(
         this.prefix + url,
         data,
-        config
+        config,
       );
       return response;
     } catch (error: any) {
@@ -49,13 +49,13 @@ export default class AxiosWrapper implements IAxiosWrapper {
   async patch(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
     try {
       const response = await this.axiosInstance.patch(
         this.prefix + url,
         data,
-        config
+        config,
       );
       return response;
     } catch (error: any) {
@@ -66,13 +66,13 @@ export default class AxiosWrapper implements IAxiosWrapper {
   async put(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
     try {
       const response = await this.axiosInstance.put(
         this.prefix + url,
         data,
-        config
+        config,
       );
       return response;
     } catch (error: any) {
@@ -82,12 +82,12 @@ export default class AxiosWrapper implements IAxiosWrapper {
 
   async delete(
     url: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
     try {
       const response = await this.axiosInstance.delete(
         this.prefix + url,
-        config
+        config,
       );
       return response;
     } catch (error: any) {
@@ -101,6 +101,8 @@ export default class AxiosWrapper implements IAxiosWrapper {
     message?: string;
   } {
     const data = res.data;
+    console.log(data);
+
     if (
       data &&
       data.isSuccess &&
@@ -115,7 +117,7 @@ export default class AxiosWrapper implements IAxiosWrapper {
     } else {
       return {
         isSuccess: false,
-        message: data.message || this.messageTransalater(res.status) || '',
+        message: data.message || this.messageTransalater(res.status) || "",
       };
     }
   }
@@ -123,21 +125,21 @@ export default class AxiosWrapper implements IAxiosWrapper {
   private messageTransalater(status: number): string {
     switch (status) {
       case 400:
-        return '400';
+        return "400";
       case 401:
-        return '401';
+        return "401";
       case 403:
-        return '403';
+        return "403";
       case 409:
-        return '409';
+        return "409";
       case 410:
-        return '410';
+        return "410";
       case 418:
-        return '418';
+        return "418";
       case 500:
-        return '500';
+        return "500";
       default:
-        return 'failed';
+        return "failed";
     }
   }
 }

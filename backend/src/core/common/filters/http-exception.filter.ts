@@ -70,7 +70,7 @@ export class ValidationFilter implements ExceptionFilter {
     return response.status(400).json({
       isSuccess: false,
       statusCode: 400,
-      validationErrors: exception.validationErrors,
+      message: exception.validationErrors[0].error || 'Validation failed',
     });
   }
 }
