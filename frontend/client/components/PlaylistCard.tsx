@@ -1,6 +1,7 @@
 import { PlaylistResponseItem } from "@/apis/types/response.type";
 import { DeleteButton } from "@/components/track/DeleteButton";
 import { PlayButton } from "@/components/track/PlayButton";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +17,10 @@ function PlaylistCard({
   onDeleteTrack,
 }: PlaylistCardProps): JSX.Element {
   const navigate = useNavigate();
+  const { isLogin, user } = useAuth();
+
+  const isOwner = user?._id === playlist.createdBy._id;
+
   return (
     <article
       className={cn(
@@ -45,20 +50,22 @@ function PlaylistCard({
         />
       </div>
 
-      <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-        <DeleteButton
-          isPlaying={false}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            if (onDeleteTrack) {
-              onDeleteTrack(playlist._id);
-            }
-          }}
-          size="sm"
-          variant="secondary"
-        />
-      </div>
+      {isCanDelete && isOwner && (
+        <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <DeleteButton
+            isPlaying={false}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              if (onDeleteTrack) {
+                onDeleteTrack(playlist._id);
+              }
+            }}
+            size="sm"
+            variant="secondary"
+          />
+        </div>
+      )}
 
       <div>
         <h3 className="mt-0.5 text-[12px]  md:text-base font-semibold text-foreground leading-tight truncate">
