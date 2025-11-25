@@ -6,6 +6,11 @@ db-up:
 db-down:
 	docker-compose -f docker-compose-db.yml down
 
+app-up:
+	docker-compose up -d --build
+
+app-down:
+	docker-compose down
 # 
 tunnel-fe:
 	@export $(shell grep -v '^#' .env | xargs); \
