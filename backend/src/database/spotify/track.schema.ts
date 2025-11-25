@@ -85,6 +85,9 @@ export class Track {
   @Prop({ type: Number })
   duration_ms: number;
 
+  @Prop({ type: Number, default: 0 })
+  playCount: number;
+
   @Prop({ type: Boolean })
   explicit: boolean;
 
@@ -126,3 +129,8 @@ export class Track {
 }
 
 export const TrackSchema = SchemaFactory.createForClass(Track);
+
+// Add indexes for better query performance
+TrackSchema.index({ playCount: -1 }); // For sorting by popularity
+TrackSchema.index({ artistRefs: 1 }); // For artist's tracks queries
+TrackSchema.index({ albumRef: 1 }); // For album's tracks queries

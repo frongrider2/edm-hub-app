@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
-import { Artist } from './artist.schema';
+import { ArtistDocument } from './artist.schema';
 
 export type AlbumDocument = HydratedDocument<Album>;
 
@@ -63,8 +63,8 @@ export class Album {
   @Prop({ type: Number })
   total_tracks: number;
 
-  @Prop({ type: [String], default: [] })
-  available_markets: string[];
+  // @Prop({ type: [String], default: [] })
+  // available_markets: string[];
 
   @Prop({ type: ExternalUrls })
   external_urls: ExternalUrls;
@@ -100,7 +100,7 @@ export class Album {
     type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Artist' }],
     default: [],
   })
-  artistRefs: Artist[];
+  artistRefs: ArtistDocument[];
 
   @Prop({ type: String })
   album_group: string;

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import { RegisterDto } from 'src/core/dtos/auth.dto';
 import { ConfigService } from '@nestjs/config';
@@ -27,6 +27,7 @@ export class UserService {
     return this.userModel.create({
       email: dto.email,
       password: hashedPassword,
+      name: dto.name,
     });
   }
 
@@ -62,7 +63,7 @@ export class UserService {
 
   async findById(id: string): Promise<UserDocument | null> {
     try {
-      return await this.userModel.findById(id).exec();
+      return await this.userModel.findById(new Types.ObjectId(id)).exec();
     } catch (error) {
       return null;
     }

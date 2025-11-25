@@ -23,14 +23,11 @@ export class AuthGuard implements CanActivate {
       'Bearer ',
     )[1] as string;
 
-    // console.log({ token });
-
     if (!token) {
       throw new HttpException('Invalid Token', HttpStatus.UNAUTHORIZED);
     }
 
     const payload = this.authService.verifyToken(token);
-
     const user = await this.userService.findById(payload._id);
 
     if (!user) {

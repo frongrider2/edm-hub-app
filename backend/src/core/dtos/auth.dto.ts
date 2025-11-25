@@ -11,6 +11,10 @@ export class RegisterDto {
   @IsString()
   @MinLength(8)
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 }
 
 export class UserResponseDto {
@@ -37,6 +41,12 @@ export class UserResponseDto {
 
   @Expose()
   tokensUsed: number;
+
+  @Expose()
+  name: string;
+
+  @Expose()
+  picture: string;
 }
 
 export interface IJWTpayload {

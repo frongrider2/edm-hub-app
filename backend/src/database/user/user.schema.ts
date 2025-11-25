@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -34,6 +34,18 @@ export class User {
   @Prop({ default: UserRole.USER })
   role: UserRole;
 
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Playlist' }],
+    default: [],
+  })
+  favoritePlaylists: MongooseSchema.Types.ObjectId[];
+
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Track' }],
+    default: [],
+  })
+  favoriteTracks: MongooseSchema.Types.ObjectId[];
+
   @Prop({ type: Date })
   deletedAt?: Date;
 
@@ -45,3 +57,7 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// Add indexes for favorite queries
+UserSchema.index({ favoritePlaylists: 1 });
+UserSchema.index({ favoriteTracks: 1 });

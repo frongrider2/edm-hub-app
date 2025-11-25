@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthController } from 'src/core/controllers/auth.controller';
-import { UserController } from 'src/core/controllers/user.controller';
 import { AuthService } from 'src/core/auth/auth.service';
 import { ConfigurationModule } from 'src/database/config/configuration.module';
 import { UsersModule } from 'src/database/user/user.module';
@@ -15,11 +14,18 @@ import { Genre, GenreSchema } from 'src/database/spotify/genre.schema';
 import { Artist, ArtistSchema } from 'src/database/spotify/artist.schema';
 import { Album, AlbumSchema } from 'src/database/spotify/album.schema';
 import { Track, TrackSchema } from 'src/database/spotify/track.schema';
-import { PassportModule } from '@nestjs/passport';
+import { TrackController } from 'src/core/controllers/track.controller';
+import { TrackService } from 'src/core/services/track.service';
+import { AlbumController } from 'src/core/controllers/album.controller';
+import { PlaylistController } from 'src/core/controllers/playlist.controller';
+import { ArtistController } from 'src/core/controllers/artist.controller';
+import { AlbumService } from 'src/core/services/album.service';
+import { PlaylistService } from 'src/core/services/playlist.service';
+import { ArtistService } from 'src/core/services/artist.service';
+import { Playlist, PlaylistSchema } from 'src/database/spotify/playlist.schema';
 
 @Module({
   imports: [
-    PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
@@ -58,9 +64,28 @@ import { PassportModule } from '@nestjs/passport';
         name: Track.name,
         schema: TrackSchema,
       },
+      {
+        name: Playlist.name,
+        schema: PlaylistSchema,
+      },
     ]),
   ],
-  controllers: [UserController, AuthController, AdminController],
-  providers: [AuthService, SpotifyService, SpotifyAdminService],
+  controllers: [
+    AuthController,
+    AdminController,
+    TrackController,
+    AlbumController,
+    PlaylistController,
+    ArtistController,
+  ],
+  providers: [
+    AuthService,
+    SpotifyService,
+    SpotifyAdminService,
+    TrackService,
+    AlbumService,
+    PlaylistService,
+    ArtistService,
+  ],
 })
 export class CoreModule {}

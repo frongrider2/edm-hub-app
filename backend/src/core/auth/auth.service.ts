@@ -147,16 +147,19 @@ export class AuthService {
     const tokens = await this.getGoogleTokens(code);
     const userInfo = await this.getGoogleUserInfo(tokens.access_token);
     const user = await this.validateOrCreateGoogleUser(userInfo);
+
+    const jwtToken = this.generateTokens(user);
+
     return {
       user,
       tokens,
-      redirectUrl: `${this.frontendUrl}/google?token=${tokens.access_token}&refreshToken=${tokens.refresh_token}`,
+      redirectUrl: `${this.frontendUrl}/google?access=${jwtToken.accessToken}&refresh=${jwtToken.refreshToken}`,
     };
   }
 
   async validateOrCreateGoogleUser(
     googleProfile: GoogleUserInfo,
-  ): Promise<User> {
+  ): Promise<UserDocument> {
     let user = await this.userService.findByGoogleId(googleProfile.sub);
 
     if (!user && googleProfile.email) {

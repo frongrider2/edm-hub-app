@@ -7,6 +7,7 @@ import {
   Res,
   Query,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { UserRequest } from 'src/core/auth/decorators/user.decolator';
@@ -71,16 +72,22 @@ export class AuthController {
   async profile(@UserRequest() user: IJWTpayload) {
     const userFind = await this.userService.findById(user._id);
 
+    if (!userFind) {
+      throw new NotFoundException('User not found');
+    }
+
     const userRes = plainToInstance(UserResponseDto, userFind, {
       excludeExtraneousValues: true,
     });
 
-    return userRes;
+    return {
+      ...userRes,
+      _id: userFind._id.toString(),
+    };
   }
 
   @Get('google-login')
   googleLogin(@Res() res: Response) {
-    console.log('ok');
     const url = this.authService.getGoogleAuthUrl();
     res.redirect(url);
   }
