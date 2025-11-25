@@ -10,10 +10,17 @@ RUN npm install -g pnpm
 
 RUN pnpm install
 
+RUN npm install -g serve
+
 COPY . .
 
-RUN pnpm run build
+# Accept build args for environment variables
+ARG VITE_API_ENDPOINT
+# Set environment variables for build time
+ENV VITE_API_ENDPOINT=$VITE_API_ENDPOINT
 
-EXPOSE 8080
+RUN pnpm run build:client
 
-CMD [ "pnpm", "start" ]
+EXPOSE 3000
+
+CMD [ "serve", "-s", "dist/spa" ]
