@@ -24,8 +24,7 @@ const iconSizeClasses = {
 
 const variantClasses = {
   primary: "neon-button-primary",
-  secondary:
-    "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground",
+  secondary: "bg-red-500 text-white hover:bg-red-600",
 };
 
 /**

@@ -14,12 +14,16 @@ interface PlaylistFormState {
 
 export default function CreatePlaylistModal(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { closeModal } = useModal();
+  const { closeModal, openModal, modalState } = useModal();
   const [form, setForm] = useState<PlaylistFormState>(() => ({
     name: "",
     description: "",
   }));
   const [error, setError] = useState<string | null>(null);
+
+  const trackId = (modalState["create-playlist_payload"] as any)?.trackId as
+    | string
+    | undefined;
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -39,6 +43,9 @@ export default function CreatePlaylistModal(): JSX.Element {
 
     if (result.isSuccess) {
       closeModal("create-playlist");
+      if (trackId) {
+        openModal({ id: "add-playlist", payload: { trackId } });
+      }
       dispatch(increment());
       toast.success("Playlist created successfully");
     } else {

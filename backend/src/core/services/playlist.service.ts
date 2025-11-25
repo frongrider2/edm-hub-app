@@ -237,4 +237,22 @@ export class PlaylistService {
 
     return { items: orderedTracks, total, hasNext, limit, skip };
   }
+
+  async softDeletePlaylist(userId, playlistId: string) {
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    const playlist = await this.playlistModel.findOneAndUpdate(
+      { _id: playlistId, createdBy: userId },
+      { deletedAt: new Date() },
+      { new: true },
+    );
+    if (!playlist) {
+      throw new NotFoundException(
+        'Playlist not found or you are not the owner',
+      );
+    }
+    return playlist;
+  }
 }

@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { useAuthApi } from "@/hooks/use-api";
 import { PlaylistResponseItem } from "@/apis/types/response.type";
 import { Plus } from "lucide-react";
-import { useCounter } from "@/states/counter/counterSlice";
+import { increment, useCounter } from "@/states/counter/counterSlice";
+import { useAuth } from "@/hooks/use-auth";
+import { showSuccess } from "@/utils/toast";
+import { useAppDispatch } from "@/states/hooks";
 
 function Playlists(): JSX.Element {
   const navigate = useNavigate();
@@ -23,6 +26,7 @@ function Playlists(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [hasNext, setHasNext] = useState(false);
   const counter = useCounter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchPlaylists = async () => {
@@ -35,6 +39,15 @@ function Playlists(): JSX.Element {
     };
     fetchPlaylists();
   }, [counter]);
+
+  const onDeleteTrack = async (playlistId: string) => {
+    const api = useAuthApi();
+    const response = await api.playlist.deletePlaylist(playlistId);
+    if (response.isSuccess) {
+      showSuccess("Playlist deleted");
+      dispatch(increment());
+    }
+  };
 
   return (
     <motion.div
@@ -73,7 +86,11 @@ function Playlists(): JSX.Element {
             className="text-left"
             key={playlist.slug}
           >
-            <PlaylistCard playlist={playlist} />
+            <PlaylistCard
+              playlist={playlist}
+              isCanDelete={true}
+              onDeleteTrack={onDeleteTrack}
+            />
           </Link>
         ))}
       </div>

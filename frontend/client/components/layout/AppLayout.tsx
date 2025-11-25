@@ -25,7 +25,7 @@ function AppLayout(): JSX.Element {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-transparent text-foreground relative">
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 overflow-hidden px-4 py-4 md:flex-row md:px-6 md:py-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 overflow-hidden px-4 py-8 md:flex-row md:px-6 md:py-8">
         <div className="hidden md:block md:w-64">
           <Sidebar />
         </div>

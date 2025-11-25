@@ -61,4 +61,11 @@ export default class PlaylistEndpoints extends Endpoint {
       .then((res) => this.axiosWrapper.interceptor<PlaylistResponseItem>(res))
       .catch((err) => this.axiosWrapper.interceptor<PlaylistResponseItem>(err));
   }
+
+  async deletePlaylist(playlistId: string) {
+    return await this.axiosWrapper
+      .delete(`/playlist/${playlistId}`)
+      .then((res) => this.axiosWrapper.interceptor<PlaylistResponseItem>(res))
+      .catch((err) => this.axiosWrapper.interceptor<PlaylistResponseItem>(err));
+  }
 }

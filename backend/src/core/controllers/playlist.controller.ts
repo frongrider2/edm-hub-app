@@ -6,6 +6,7 @@ import {
   Post,
   Body,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { UserRequest } from 'src/core/auth/decorators/user.decolator';
 import { AuthGuard } from 'src/core/auth/guards/auth.guard';
@@ -83,5 +84,14 @@ export class PlaylistController {
   getPlaylistBySlug(@Param('slug') slug: string) {
     console.log({ slug });
     return this.playlistService.getPlaylistBySlug(slug);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(':playlistId')
+  deletePlaylist(
+    @UserRequest() user: IJWTpayload,
+    @Param('playlistId') playlistId: string,
+  ) {
+    return this.playlistService.softDeletePlaylist(user._id, playlistId);
   }
 }

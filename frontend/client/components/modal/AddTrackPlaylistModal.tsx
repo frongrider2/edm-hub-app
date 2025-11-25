@@ -61,7 +61,7 @@ export default function AddTrackPlaylistModal(): JSX.Element {
 
   const handleCreateNewPlaylist = () => {
     closeModal("add-playlist");
-    openModal({ id: "create-playlist" });
+    openModal({ id: "create-playlist", payload: { trackId } });
   };
 
   return (

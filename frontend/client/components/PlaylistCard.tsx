@@ -1,12 +1,21 @@
 import { PlaylistResponseItem } from "@/apis/types/response.type";
+import { DeleteButton } from "@/components/track/DeleteButton";
 import { PlayButton } from "@/components/track/PlayButton";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface PlaylistCardProps {
   playlist: PlaylistResponseItem;
+  isCanDelete?: boolean;
+  onDeleteTrack?: (playlistId: string) => void;
 }
 
-function PlaylistCard({ playlist }: PlaylistCardProps): JSX.Element {
+function PlaylistCard({
+  playlist,
+  isCanDelete,
+  onDeleteTrack,
+}: PlaylistCardProps): JSX.Element {
+  const navigate = useNavigate();
   return (
     <article
       className={cn(
@@ -29,10 +38,25 @@ function PlaylistCard({ playlist }: PlaylistCardProps): JSX.Element {
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            console.log("play");
+            navigate(`/playlists/${playlist.slug}`);
           }}
           size="sm"
           variant="primary"
+        />
+      </div>
+
+      <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <DeleteButton
+          isPlaying={false}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            if (onDeleteTrack) {
+              onDeleteTrack(playlist._id);
+            }
+          }}
+          size="sm"
+          variant="secondary"
         />
       </div>
 

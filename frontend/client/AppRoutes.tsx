@@ -16,13 +16,13 @@ function AppRoutes(): JSX.Element {
 
   return (
     <Routes location={location} key={location.pathname}>
+      <Route path="/" element={<Navigate to="/discover" replace />} />
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/google" element={<GoogleCallback />} />
       </Route>
       <Route element={<AppLayout />}>
-        <Route path="/" element={<Navigate to="/discover" replace />} />
         <Route path="/discover" element={<Songs />} />
         <Route path="/artists/:artistId" element={<Artist />} />
         <Route path="/playlists" element={<Playlists />} />
