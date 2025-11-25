@@ -18,11 +18,17 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "preview": "vite preview --port 8080"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.0",
+    "axios": "^1.13.2",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "lucide": "^0.554.0",
+    "react-redux": "^9.2.0",
+    "react-toastify": "^11.0.5",
     "zod": "^3.25.76"
   },
   "devDependencies": {

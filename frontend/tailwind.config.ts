@@ -7,9 +7,9 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.5rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1440px",
       },
     },
     extend: {
@@ -57,11 +57,31 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        neon: {
+          pink: "hsl(var(--neon-pink))",
+          purple: "hsl(var(--neon-purple))",
+          cyan: "hsl(var(--neon-cyan))",
+          blue: "hsl(var(--neon-blue))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        full: "9999px",
+      },
+      backgroundImage: {
+        "app-radial":
+          "radial-gradient(circle at top left, hsl(var(--neon-purple) / 0.35), transparent 55%), radial-gradient(circle at bottom right, hsl(var(--neon-cyan) / 0.3), transparent 55%)",
+        "app-linear":
+          "linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--surface-elevated)) 60%, hsl(var(--background-alt)) 100%)",
+        "neon-card":
+          "linear-gradient(135deg, hsl(var(--neon-purple) / 0.8), hsl(var(--neon-pink) / 0.75))",
+      },
+      boxShadow: {
+        "neon-sm": "0 0 10px hsl(var(--neon-purple) / 0.55)",
+        "neon-md": "0 0 18px hsl(var(--neon-pink) / 0.7)",
+        "neon-cyan": "0 0 18px hsl(var(--neon-cyan) / 0.7)",
       },
       keyframes: {
         "accordion-down": {
@@ -80,33 +100,20 @@ export default {
             height: "0",
           },
         },
-        "fade-in": {
-          from: {
-            opacity: "0",
-          },
-          to: {
-            opacity: "1",
-          },
+        pulsewave: {
+          "0%, 100%": { transform: "scaleY(0.4)", opacity: "0.5" },
+          "50%": { transform: "scaleY(1)", opacity: "1" },
         },
-        "slide-up": {
-          from: {
-            transform: "translateY(20px)",
-            opacity: "0",
-          },
-          to: {
-            transform: "translateY(0)",
-            opacity: "1",
-          },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 0px rgba(0,0,0,0)" },
+          "50%": { boxShadow: "0 0 25px rgba(168, 85, 247, 0.7)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out",
-        "slide-up": "slide-up 0.5s ease-out",
-      },
-      fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        pulsewave: "pulsewave 1.2s ease-in-out infinite",
+        glow: "glow 2.4s ease-in-out infinite",
       },
     },
   },
