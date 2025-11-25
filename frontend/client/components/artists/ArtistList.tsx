@@ -12,7 +12,7 @@ export default function ArtistList() {
   useEffect(() => {
     const fetchArtists = async () => {
       const api = useAuthApi();
-      const response = await api.artist.getArtistsPopular(10, 1);
+      const response = await api.artist.getArtistsPopular(30, 1);
       if (response.isSuccess) {
         setArtistsList(response.data.items);
         setHasNext(response.data.hasNext);
