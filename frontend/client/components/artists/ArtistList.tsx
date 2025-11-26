@@ -31,7 +31,7 @@ export default function ArtistList() {
           Curated for you
         </span>
       </div>
-      <div className="neon-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
+      <div className="neon-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pb-1 min-h-[5rem]">
         {artistsList.map((artist) => (
           <button
             key={artist.name}
@@ -49,11 +49,6 @@ export default function ArtistList() {
             <span className="line-clamp-1 text-xs font-medium text-foreground">
               {artist.name}
             </span>
-            {/* {artist.tag && (
-            <span className="line-clamp-1 text-[10px] text-muted-foreground/80">
-              {artist.tag}
-            </span>
-          )} */}
           </button>
         ))}
       </div>

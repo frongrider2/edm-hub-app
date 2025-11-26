@@ -36,7 +36,7 @@ export default function PlaylistLists() {
           {playlistsList.length} curated
         </span>
       </div>
-      <div className="neon-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
+      <div className="neon-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pb-1 min-h-[7.5rem]">
         {playlistsList.map((playlist) => (
           <button
             key={playlist._id}

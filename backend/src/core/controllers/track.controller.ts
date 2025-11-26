@@ -13,10 +13,12 @@ export class TrackController {
   getPopular(
     @Query('limit') limit: number = 10,
     @Query('skip') skip: number = 0,
+    @Query('query') query: string = '',
   ) {
     return this.trackService.getMostPopular({
       limit,
       skip,
+      query,
     });
   }
 

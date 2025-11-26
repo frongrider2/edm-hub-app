@@ -6,6 +6,7 @@ import PlaylistLists from "@/components/playlists/playlistLists";
 import { TrackList } from "@/components/track/TrackList";
 import { TrackResponseItem } from "@/apis/types/response.type";
 import { useAuthApi } from "@/hooks/use-api";
+import { Search } from "lucide-react";
 
 interface Artist {
   name: string;
@@ -16,14 +17,19 @@ interface Artist {
 function Songs(): JSX.Element {
   const [tracksList, setTracksList] = useState<TrackResponseItem[]>([]);
   const [hasTracksNext, setHasTracksNext] = useState(false);
+  const [query, setQuery] = useState("");
 
   const fetchTracks = async () => {
     const api = useAuthApi();
-    const response = await api.track.getTracksPopular(40, 1);
+    const response = await api.track.getTracksPopular(40, 1, query);
     if (response.isSuccess) {
       setTracksList(response.data.items);
       setHasTracksNext(response.data.hasNext);
     }
+  };
+
+  const handleSearch = async (query: string) => {
+    await fetchTracks();
   };
 
   useEffect(() => {
@@ -39,15 +45,20 @@ function Songs(): JSX.Element {
       className="space-y-4"
     >
       {/* <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between"> */}
-      {/* <div className="relative w-full md:max-w-sm">
-          <input
-            className="neon-input pl-9 pr-4"
-            placeholder="Search tracks, artists, or moods"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        </div> */}
+      <div className="relative w-full md:max-w-sm">
+        <input
+          className="neon-input pl-9 pr-4"
+          placeholder="Search tracks"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleSearch(query);
+            }
+          }}
+        />
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      </div>
       {/* <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <button

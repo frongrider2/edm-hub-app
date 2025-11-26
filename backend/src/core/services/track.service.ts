@@ -27,13 +27,15 @@ export class TrackService {
   async getMostPopular({
     limit = 50,
     skip = 0,
+    query = '',
   }: {
     limit?: number;
     skip?: number;
+    query?: string;
   }) {
     const [results, total] = await Promise.all([
       this.trackModel
-        .find({ deletedAt: null })
+        .find({ deletedAt: null, name: { $regex: query, $options: 'i' } })
         .sort({ playCount: -1, updatedAt: -1 })
         .skip(skip)
         .limit(limit)

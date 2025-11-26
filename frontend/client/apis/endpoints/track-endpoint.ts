@@ -5,9 +5,9 @@ import {
 import Endpoint from "./Endpoint";
 
 export default class TracksEndpoints extends Endpoint {
-  async getTracksPopular(limit: number, page: number) {
+  async getTracksPopular(limit: number, page: number, query: string) {
     return await this.axiosWrapper
-      .get(`/track/popular`, { params: { limit, page } })
+      .get(`/track/popular`, { params: { limit, page, query } })
       .then((res) => this.axiosWrapper.interceptor<TrackApiResponse>(res))
       .catch((err) => this.axiosWrapper.interceptor<TrackApiResponse>(err));
   }

@@ -95,7 +95,7 @@ export const TrackList = ({
         </div>
       </section>
 
-      <section className="space-y-3">
+      <section className="space-y-3  min-h-[20rem]">
         <motion.div
           key={viewMode}
           initial={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -121,12 +121,12 @@ export const TrackList = ({
                   onDeleteTrack={onDeleteTrack}
                 />
               ))}
-              {/* {filteredSongs.length === 0 && (
+              {tracksList.length === 0 && (
                 <div className="col-span-full rounded-2xl border border-dashed border-white/10 bg-black/40 px-4 py-8 text-center text-sm text-muted-foreground">
                   No songs match that vibe yet. Try a different search or
                   category.
                 </div>
-              )} */}
+              )}
             </motion.div>
           )}
 
@@ -148,12 +148,6 @@ export const TrackList = ({
                   onDeleteTrack={onDeleteTrack}
                 />
               ))}
-              {/* {filteredSongs.length === 0 && (
-                <div className="mt-2 rounded-xl border border-dashed border-white/10 bg-black/40 px-3 py-4 text-center text-[11px] text-muted-foreground">
-                  No songs match that vibe yet. Try a different search or
-                  category.
-                </div>
-              )} */}
             </motion.div>
           )}
         </motion.div>

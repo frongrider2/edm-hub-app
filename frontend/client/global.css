@@ -152,7 +152,7 @@
   }
 
   .neon-input {
-    @apply w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition-[box-shadow,border-color,background-color] focus:border-neon-purple focus:bg-white/10 focus:shadow-neon-md;
+    @apply w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition-[box-shadow,border-color,background-color] focus:border-neon-purple focus:bg-white/10 focus:shadow-neon-sm;
   }
 
   .neon-button-primary {
